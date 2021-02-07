@@ -1,0 +1,25 @@
+---
+get_values:
+  default: 'show running-config | begin banner'
+attributes:
+  name:
+    default:
+      get_value: 'default'
+  motd:
+    default:
+      get_value: 'banner motd \^C(?<motd>.*?)\^C'
+      set_value: '<state>banner motd %<motd>%'
+      unset_value: 'no banner motd'
+      multiline: 'true'
+  login:
+    default:
+      get_value: 'banner login \^C(?<login>.*?)\^C'
+      set_value: '<state>banner login %<login>%'
+      unset_value: 'no banner login'
+      multiline: 'true'
+  exec:
+    default:
+      get_value: 'banner exec \^C(?<exec>.*?)\^C'
+      set_value: '<state>banner exec %<exec>%'
+      unset_value: 'no banner exec'
+      multiline: 'true'

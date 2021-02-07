@@ -1,0 +1,18 @@
+---
+get_values:
+  default: 'show running-config | include logging'
+attributes:
+  trap:
+    default:
+      get_value: '^logging trap (?<monitor>debugging|informational|notifications|warnings|errors|critical|alerts|emergencies)$'
+      set_value: 'logging trap <trap>'
+      unset_value: 'no logging trap'
+      optional_match: true
+  origin_id:
+    default:
+      get_value: '^logging origin-id (?<origin_id>hostname|ip|ipv6|string\s\S*)$'
+      set_value: 'logging origin-id <origin_id>'
+      unset_value: 'no logging origin-id'
+      optional_match: true
+    exclusions:
+      - device: '4948'

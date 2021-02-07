@@ -1,0 +1,66 @@
+---
+".gitignore":
+  paths: &1
+  - SSH_I_DUMPED
+  - "/spec/fixtures/acceptance-credentials.conf"
+  - "/spec/fixtures/acceptance-device.conf"
+  - "/spec/fixtures/inventory.yml"
+".gitlab-ci.yml":
+  delete: true
+".pdkignore":
+  paths: *1
+".rubocop.yml":
+  include_todos: true
+  default_configs:
+    Metrics/BlockNesting:
+      Max: 4
+".travis.yml":
+  deploy_to_forge:
+    enabled: false
+  simplecov: true
+  includes:
+  - env: PUPPET_GEM_VERSION="~> 6.0.0" RSAPI_GEM_VERSION="~> 1.6.0" CHECK=parallel_spec
+    rvm: 2.5.1
+    stage: spec
+  notifications:
+    slack:
+      secure: >-
+        wHaXmPndWJRp/38/UuzfwXnljWfCrP+VMpNN1wRZtGSShQ3zvsr42Bw8462YIhZDwe7rzW1T4Gvxk8r/ahfPxRBO/h5InJ9qxx4Bb8zcfXwQ+hjdE+b2apeSj3czn2XFy2vN3CGTdFCmZgvzEb14RmsJHYugNb6bbZ6qnBhyP2bObmifmACEiA1iWs53l+KosrB1ksA7pZ+QloOqhKL28cRXG14Kxa5GEzMxDfb0QDXzzcImx7fiNj2QoGKqhB4wb4UO3fsLuhINueduQc7Z9e7chaqzyqZ8sXoU98BOeKyTA/p8JIK53h51jlS0cpzOXSQGnPLYG0xd5HzYLcvsn299l/cse5fHbITIGN0Y2iJ3daVKB9TpLZrWhVwGQwLhs4ZQ03KkbnD6ARiegVqqSXKqh7W+7gLM6+nH3IUiZkKdDW6Mm3nu//RszfI8ESm9YokBk0ftY5BzE5bp65nrCLLUlc9yPRKGn8TXbCIB8OmEKTWoEutwYKVdzIetOWGrpUUsfjCkmeHunTJ8lT3fKFKqo1rQPkOH2Vvp2LrW1f80yems5N6DzrkUNuwkPFEhNUvqyLbkqW3Tm1UMe8+y0XawXsI0krt0VDSnjGZ2guGxBbY0jj9LToCk0oxQ9jCIz3TSWNTCL/eUndSHUnSwcNLrU/rTR35R3LLVwrhWRK0=
+appveyor.yml:
+  delete: true
+Gemfile:
+  optional:
+    ":default":
+    - gem: backport_dig
+      condition: Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('2.3.0')
+    - gem: puppetmodule-netdev_stdlib
+      git: https://github.com/puppetlabs/netdev_stdlib.git
+      from_env: true
+    - gem: net-ssh
+      version: "~> 4.0"
+    - gem: net-ssh-telnet
+    - gem: bolt
+    ":development":
+    - gem: codecov
+    - gem: puppet-resource_api
+      from_env: RSAPI_GEM_VERSION
+    - gem: simplecov-console
+    - gem: github_changelog_generator
+      git: https://github.com/skywinder/github-changelog-generator
+      ref: master
+      condition: Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.2.2')
+    ":system_tests":
+    - gem: puppet-module-posix-system-r#{minor_version}
+      platforms: ruby
+    - gem: puppet-module-win-system-r#{minor_version}
+      platforms:
+      - mswin
+      - mingw
+      - x64_mingw
+Rakefile:
+  changelog_user: puppetlabs
+  changelog_project: cisco_ios
+spec/spec_helper.rb:
+  mock_with: ":rspec"
+  strict_level: ":error"
+  coverage_report: true

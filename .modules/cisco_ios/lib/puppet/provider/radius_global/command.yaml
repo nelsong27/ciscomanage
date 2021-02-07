@@ -1,0 +1,30 @@
+---
+get_values:
+  default: 'show running-config'
+attributes:
+  name:
+    default:
+      get_value: 'default'
+  key:
+    default:
+      get_value: 'radius-server key \d (?<key>[^\s]+)'
+      set_value: 'radius-server key <key_format> <key>'
+  key_format:
+    default:
+      get_value: 'radius-server key (?<key_format>\d)'
+      set_value: 'radius-server key <key_format>'
+  retransmit_count:
+    default:
+      get_value: 'radius-server retransmit (?<retransmit_count>\d+)'
+      set_value: 'radius-server retransmit <retransmit_count>'
+      default: 3
+  source_interface:
+    default:
+      get_value: 'ip radius source-interface (?<rsource_interface>[^\s]+)'
+      set_value: 'ip radius source-interface <source_interface>'
+      unset_value: 'no ip radius source-interface <source_interface>'
+  timeout:
+    default:
+      get_value: 'radius-server timeout (?<timeout>\d+)'
+      set_value: 'radius-server timeout <timeout>'
+      default: 5

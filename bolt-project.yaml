@@ -1,0 +1,6 @@
+name: networkconfig
+modules:
+- name: puppetlabs-cisco_ios
+- name: puppetlabs-resource_api
+- name: puppetlabs-netdev_stdlib
+- name: puppetlabs-ciscopuppet

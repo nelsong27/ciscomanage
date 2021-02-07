@@ -1,0 +1,50 @@
+---
+get_values:
+  default: 'show running-config | include ntp server'
+get_instances:
+  default: 'ntp server.+\\n'
+set_values:
+  default: '<state> ntp server <vrf> <name> <key> <maxpoll> <minpoll> <prefer> <source_interface> '
+ensure_is_state:
+  default: 'true'
+attributes:
+  name:
+    default:
+      get_value: '.*(?:(?: server( vrf \S+)? )(?:(?<name>\S*))).*'
+  key:
+    default:
+      print_key: 'true'
+      get_value: '.*(?:(?: key )(?:(?<key>\S*))).*'
+  minpoll:
+    default:
+      print_key: 'true'
+      get_value: '.*(?:(?: minpoll )(?:(?<minpoll>\S*))).*'
+    exclusions:
+      - device: '3560'
+      - device: '3750'
+      - device: '4948'
+      - device: '4507'
+  maxpoll:
+    default:
+      print_key: 'true'
+      get_value: '.*(?:(?: maxpoll )(?:(?<maxpoll>\S*))).*'
+    exclusions:
+      - device: '3560'
+      - device: '3750'
+      - device: '4948'
+      - device: '4507'
+  prefer:
+    default:
+      print_key: 'true'
+      get_value: '(?<prefer>prefer)'
+  source_interface:
+    default:
+      print_key: 'true'
+      get_value: '.*(?:(?: source )(?:(?<source_interface>\S*))).*'
+  vrf:
+    default:
+      print_key: 'true'
+      get_value: '.*(?:(?: vrf )(?:(?<vrf>\S*))).*'
+    exclusions:
+      - device: '2960'
+      - device: '4503'

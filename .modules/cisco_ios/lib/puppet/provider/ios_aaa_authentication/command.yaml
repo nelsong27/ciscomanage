@@ -1,0 +1,41 @@
+---
+get_values:
+  default: 'show running-config | begin aaa authentication'
+get_instances:
+  default: '(?:\n)aaa authentication .*'
+set_values:
+  default: '<state>aaa authentication <authentication_list_set> <authentication_list> <server_groups> <enable_password> <local> <switch_auth>'
+attributes:
+  name:
+    default:
+      get_value: 'name'
+      optional_match: true
+  authentication_list_set:
+    default:
+      get_value: 'aaa authentication (\S*)\s'
+  authentication_list:
+    default:
+      get_value: 'aaa authentication (?:\S*)\s(\S*)\s'
+      optional_match: true
+  server_groups:
+    default:
+      get_value: '(?:group (\S*))'
+      optional_match: true
+  enable_password:
+    default:
+     get_value: 'aaa authentication (?:\S*)\s(?:\S*)\s.*(enable)'
+     optional_match: true
+  local:
+    default:
+     get_value: 'aaa authentication (?:\S*)\s(?:\S*)\s.*(local)'
+     optional_match: true
+  switch_auth:
+    default:
+     get_value: 'aaa authentication (?:\S*)\s(?:\S*)\s.*(switch-auth)'
+     optional_match: true
+  suppress_null_username:
+    exclusions:
+      - os_family: '^(?!.*IOS-XE Software).*$'
+    default:
+      get_value: 'aaa authentication suppress null-username'
+      optional_match: true

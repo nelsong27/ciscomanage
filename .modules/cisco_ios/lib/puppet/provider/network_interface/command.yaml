@@ -1,0 +1,51 @@
+---
+get_values:
+  default: 'show running-config | begin interface'
+get_instances:
+  default: '\\ninterface (?:(?:.| |\\n )*\\n)'
+get_speed_status:
+  default: 'show interfaces status'
+delete_command_default:
+  default: 'default interface <name>'
+delete_command_no:
+  default: 'no interface <name>'
+attributes:
+  name:
+    default:
+      print_key: 'true'
+      get_value: '^.*interface (?<name>\S*)\n'
+  description:
+    default:
+      print_key: 'true'
+      get_value: '.*(?:(?: description )(?:(?<description>[^\\n]*)\\n)).*'
+      set_value: '<description>'
+      optional_match: true
+  mtu:
+    exclusions:
+    - device: '2960'
+    - device: '3560'
+    - device: '3650'
+    - device: '3750'
+    default:
+      print_key: 'true'
+      get_value: '.*(?:(?:[^ip] mtu )(?:(?<mtu>[^\\n]*)\n)).*'
+      set_value: '<mtu>'
+      optional_match: true
+  speed:
+    default:
+      print_key: 'true'
+      get_value: '.*(?:(?: speed )(?:(?<speed>[^\\n]*)\\n)).*'
+      set_value: '<speed>'
+      optional_match: true
+  duplex:
+    default:
+      print_key: 'true'
+      get_value: '.*(?:(?: duplex )(?:(?<duplex>[^\\n]*)\\n)).*'
+      set_value: '<duplex>'
+      optional_match: true
+  enable:
+    default:
+      get_value: ''
+      get_value: '.*(?<enable>shutdown[^\\n]*)\\n.*'
+      set_value: '<enable> shutdown'
+      optional_match: true

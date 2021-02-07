@@ -1,0 +1,40 @@
+---
+get_values:
+  default: 'show running-config | include logging'
+attributes:
+  enable:
+    default:
+      get_value: '^(?<enable>no)? logging on$'
+      set_value: '<enable> logging on'
+      optional_match: true
+  facility:
+    default:
+      get_value: '^logging facility (?<facility>\S+)'
+      set_value: 'logging facility <facility>'
+      default:   'local7'
+  monitor:
+    default:
+      get_value: '^logging monitor (?<monitor>debugging|informational|notifications|warnings|errors|critical|alerts|emergencies)$'
+      set_value: 'logging monitor <monitor>'
+      unset_value: 'no logging monitor'
+      default:   'informational'
+  console:
+    default:
+      get_value: '^logging console (?<console>debugging|informational|notifications|warnings|errors|critical|alerts|emergencies)$'
+      set_value: 'logging console <console>'
+      unset_value: 'no logging console'
+      default:   'informational'
+  source_interface:
+    default:
+      get_value: '^logging source-interface (?<source_interface>.*)$'
+      set_value: 'logging source-interface <source_interface>'
+  buffered_size:
+    default:
+      get_value: '^logging buffered (?<buffered_size>.*)'
+      set_value: 'logging buffered <buffered_size>'
+      unset_value: 'no logging buffered'
+  buffered_severity_level:
+    default:
+      get_value: '^logging buffered (?<buffered_severity_level>.*)'
+      set_value: 'logging buffered <buffered_severity_level>'
+      unset_value: 'no logging buffered'

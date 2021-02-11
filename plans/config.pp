@@ -2,9 +2,10 @@
 # @param tclfile The name of the file that contains the script to run at the device.
 # @param devuser The user on the device to use to authenticate with.
 # @param type The type of device that is being connect to.  Either ios or nxos are acceptable.
+# @param peserver The Puppet Server to run the plan with
 plan ciscomanage::config (
 Targetspec $targets,
-Targetspec $host = 'localhost',
+Targetspec $peserver = 'localhost',
 String $tclfile,
 String $devuser,
 Enum['ios', 'nxos'] $type
@@ -17,7 +18,7 @@ Enum['ios', 'nxos'] $type
     case $type {
       'ios': {
         # copy up the tcl file using scp.   Uses sshkey
-        run_command("scp -i ~/.ssh/id_rsa ciscomanage/${tclfile} ${devuser}@${target}:flash:${tclfile}", $host, 'Uploading script to device')
+        run_command("scp -i ~/.ssh/id_rsa ciscomanage/${tclfile} ${devuser}@${target}:flash:${tclfile}", $peserver, 'Uploading script to device')
         ctrl::sleep(5)
         # run command on the target to run the script that was uploaded
         run_command("tclsh ${tclfile}", $target)
@@ -27,7 +28,7 @@ Enum['ios', 'nxos'] $type
       }
       'nxos': {
         # copy up the tcl file using scp.   Uses sshkey
-        run_command("scp -i ~/.ssh/id_rsa ciscomanage/${tclfile} ${devuser}@${target}:bootflash:${tclfile}", $host, 'Uploading script to device')
+        run_command("scp -i ~/.ssh/id_rsa ciscomanage/${tclfile} ${devuser}@${target}:bootflash:${tclfile}", $peserver, 'Uploading script to device')
         ctrl::sleep(5)
         # run command on the target to run the script that was uploaded
         run_command("tclsh bootflash:${tclfile}", $target)

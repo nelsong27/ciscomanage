@@ -1,6 +1,0 @@
-ios_config "ip name-server 192.168.25.110"
-ios_config "ip domain list prod.puppet.demo"
-ios_config "ntp server 192.168.25.1"
-ios_config "clock timezone MST -7"
-ios_config "clock summer-time MDT recurring"
-ios_config "copy running-config startup-config"

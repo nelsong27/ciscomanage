@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .git/
 .*.sw[op]
 .metadata
@@ -26,7 +25,18 @@
 .project
 .envrc
 /inventory.yaml
-=======
-inventory.yaml
-modules/
->>>>>>> c1d3957ed4909168772ea83f46cafb561d894f1f
+/appveyor.yml
+/.fixtures.yml
+/Gemfile
+/.gitattributes
+/.gitignore
+/.gitlab-ci.yml
+/.pdkignore
+/Rakefile
+/rakelib/
+/.rspec
+/.rubocop.yml
+/.travis.yml
+/.yardopts
+/spec/
+/.vscode/

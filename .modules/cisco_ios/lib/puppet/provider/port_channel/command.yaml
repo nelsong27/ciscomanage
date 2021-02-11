@@ -1,0 +1,71 @@
+---
+get_values:
+  default: 'show running-config | begin interface'
+get_instances:
+  default: '\\ninterface Port-channel(?:(?:.| |\\n )*\\n)'
+get_interfaces_get_instances:
+  default: '\\ninterface (?:(?:.| |\\n )*\\n)'
+get_interfaces_name:
+  default: '^.*interface (?<name>\S*)\n'
+set_interfaces:
+  default: '<state>channel-group <name> mode <mode>'
+delete_command_default:
+  default: 'default interface <name>'
+delete_command_no:
+  default: 'no interface <name>'
+ensure_is_state:
+  default: 'true'
+attributes:
+  name:
+    default:
+      print_key: 'true'
+      get_value: '^.*interface (?<name>\S*)\n'
+  description:
+    default:
+      print_key: 'true'
+      get_value: '.*(?:(?: description )(?:(?<description>[^\\n]*)\\n)).*'
+      set_value: '<description>'
+      optional_match: true
+  speed:
+    default:
+      print_key: 'true'
+      get_value: '.*(?:(?: speed )(?:(?<speed>[^\\n]*)\\n)).*'
+      set_value: '<speed>'
+      optional_match: true
+  duplex:
+    default:
+      print_key: 'true'
+      get_value: '.*(?:(?: duplex )(?:(?<duplex>[^\\n]*)\\n)).*'
+      set_value: '<duplex>'
+      optional_match: true
+  flowcontrol_receive:
+    default:
+      get_value: 'flowcontrol receive (?<flowcontrol_receive>\S*)'
+      set_value: 'flowcontrol receive <flowcontrol_receive>'
+      optional_match: true
+  flowcontrol_send:
+    exclusions:
+    - device: '4948'
+    - device: '4507'
+    - device: '4503'
+    - device: '3750'
+    - device: '3650'
+    - device: '3560'
+    - device: '2960'
+    default:
+      get_value: 'flowcontrol send (?<flowcontrol_send>\S*)'
+      set_value: 'flowcontrol send <flowcontrol_send>'
+      optional_match: true
+  interfaces:
+    default:
+      get_value: '.*(?:(?: channel-group )(?:(?<channel_group>\S*))).*'
+      optional_match: true
+  mode:
+    default:
+      get_value: '.*(?:(?: channel-group )\S* mode (?:(?<mode>\S*))).*'
+      optional_match: true
+  ensure:
+    default:
+      get_value: 'not used'
+      set_value: ''
+      optional_match: true

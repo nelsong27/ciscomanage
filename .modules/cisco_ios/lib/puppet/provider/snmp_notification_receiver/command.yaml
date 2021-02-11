@@ -1,0 +1,41 @@
+---
+get_values:
+  default: 'show running-config | include snmp-server host'
+get_instances:
+  default: '^snmp-server host .*$'
+set_values:
+  default: 'snmp-server host <name> <vrf> <type> <version> <security> <username> <port>'
+delete_values:
+  default: 'no snmp-server host <name> <port> <vrf> <type> <version> <security> <username>'
+  '4948': 'no snmp-server host <name> <vrf> <username> <port> <type> <version> <security>'
+ensure_is_state:
+  default: 'true'
+attributes:
+  name:
+    default:
+      get_value: '^snmp-server host (?<name>[^\s]+)'
+  port:
+    default:
+      get_value: '.* udp-port (?<port>(\d+))'
+      print_key: 'true'
+  username:
+    default:
+      get_value: '(.* version (1|2c)+|.* version 3 [^\s]+|snmp-server host [^\s]+\s?(vrf [^\s]+)?) (?<username>(\S+))'
+  version:
+    default:
+      get_value: '.* version (?<version>(\S+))'
+      print_key: 'true'
+  type:
+    default:
+      get_value: '.* (?<type>(traps|informs))'
+      default: 'traps'
+  security:
+    default:
+      get_value: '.* version 3 (?<security>(auth|noauth|priv))'
+  vrf:
+    default:
+      get_value: '.* vrf (?<vrf>(\S+))'
+      print_key: 'true'
+    exlusion:
+      - device: '2960'
+      - device: '4503'

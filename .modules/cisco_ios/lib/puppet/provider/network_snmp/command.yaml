@@ -1,0 +1,25 @@
+---
+get_values:
+  default: 'show running-config | include ^snmp-server'
+get_instances:
+  default: 'snmp-server.+\\n'
+attributes:
+  contact:
+    default:
+      get_value: '(?:(?:snmp-server contact )(?:(?<contact>.*))).*'
+      set_value: '<state> snmp-server contact <contact>'
+      optional_match: true
+  location:
+    default:
+      get_value: '(?:(?:snmp-server location )(?:(?<location>.*))).*'
+      set_value: '<state> snmp-server location <location>'
+      optional_match: true
+  name:
+    default:
+      get_value: 'default'
+      optional_match: true
+  enable:
+    default:
+      get_value: 'not used'
+      set_value: 'no snmp-server'
+      optional_match: true

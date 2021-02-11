@@ -1,0 +1,41 @@
+---
+get_values:
+  default: 'show running-config | begin aaa accounting'
+get_instances:
+  default: '(?:\n)aaa accounting .*'
+set_values:
+  default: '<state>aaa accounting <accounting_service> <update_newinfo><update_newinfo_periodic><update_periodic><accounting_list> <accounting_status> <server_groups>'
+attributes:
+  name:
+    default:
+      get_value: 'name'
+      optional_match: true
+  accounting_service:
+    default:
+      get_value: 'aaa accounting (\S*)\s'
+  commands_enable_level:
+    default:
+      get_value: 'aaa accounting commands (\d*)\s'
+      optional_match: true
+  accounting_list:
+    default:
+      get_value: 'aaa accounting (?:update.*|(?:(?:(?:commands) \d*|(?:\S*))\s(\S*)\s))'
+  accounting_status:
+    default:
+      get_value: 'aaa accounting (?:update.*|(?:(?:(?:commands) \d*|(?:\S*))\s(?:\S*)\s(\S*)))'
+  server_groups:
+    default:
+      get_value: '(?:group (\S*))'
+      optional_match: true
+  update_newinfo:
+    default:
+      get_value: 'aaa accounting update newinfo$'
+      optional_match: true
+  update_newinfo_periodic:
+    default:
+      get_value: 'aaa accounting update newinfo periodic (\d*)'
+      optional_match: true
+  update_periodic:
+    default:
+      get_value: 'aaa accounting update periodic (\d*)'
+      optional_match: true

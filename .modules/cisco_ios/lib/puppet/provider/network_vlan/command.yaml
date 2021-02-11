@@ -1,0 +1,32 @@
+---
+get_values:
+  default: 'show vlan brief'
+header_rows:
+  default: '(VLAN.*\n)(----.*)'
+get_instances:
+  default: '(?:\n)(\d+.*)'
+set_values:
+  default: 'vlan <id>'
+delete_values:
+  default: 'no vlan <id>'
+attributes:
+  id:
+    default:
+      get_value: '(?<id>\d+)(?:.*)'
+  vlan_name:
+    default:
+      get_value: '(\d+\s+)(?<vlan_name>[\s\S]{0,32}\S)'
+      set_value: '<state> name <vlan_name>'
+  description:
+    default:
+      print_key: 'true'
+      get_value: 'not used'
+      set_value: '<description>'
+      optional_match: true
+  shutdown:
+    default:
+      get_value: '(?:\d+\s+)(?:[\s\S]{0,32}\S)(?<shutdown>.*shut\S*)*(?:.*)'
+      set_value: '<shutdown> shutdown'
+  ensure:
+    default:
+      get_value: 'not used'

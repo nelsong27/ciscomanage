@@ -14,27 +14,27 @@ Enum['ios', 'nxos'] $type
   # NOT USED upload_file('/Users/jerrymozes/code/cisco/ios/Boltdir/site-modules/nineks/files/commands.tcl', 'flash0://commands.tcl', $targets, 'Uploading to Cisco Device')
 
 # Get targets and depending on the target type run the appropriate run_commands
-  get_targets($targets).each | $target | {
+  $target = get_targets($targets) {
     case $type {
       'ios': {
         # copy up the tcl file using scp.   Uses sshkey
         run_command("scp -i ~/.ssh/id_rsa /etc/puppetlabs/code/environments/production/modules/ciscomanage/files/${tclfile} ${devuser}@${target}:flash:${tclfile}", $peserver, 'Uploading script to device')
         ctrl::sleep(5)
         # run command on the target to run the script that was uploaded
-        run_command("tclsh ${tclfile}", $target)
+        run_command("tclsh ${tclfile}", $target, "Configure the ${target}")
         ctrl::sleep(5)
         # ensure that the file that was uploaded is deleted
-        run_command("delete /force flash:${tclfile}", $target)
+        run_command("delete /force flash:${tclfile}", $target, "Delete the tcl file ${target}")
       }
       'nxos': {
         # copy up the tcl file using scp.   Uses sshkey
         run_command("scp -i ~/.ssh/id_rsa /etc/puppetlabs/code/environments/production/modules/ciscomanage/files/${tclfile} ${devuser}@${target}:bootflash:${tclfile}", $peserver, 'Uploading script to device')
         ctrl::sleep(5)
         # run command on the target to run the script that was uploaded
-        run_command("tclsh bootflash:${tclfile}", $target)
+        run_command("tclsh bootflash:${tclfile}", $target, "Configure the ${target}")
         ctrl::sleep(5)
         # ensure that the file that was uploaded is deleted
-        run_command("delete bootflash:${tclfile}", $target)
+        run_command("delete bootflash:${tclfile}", $target, "Delete the tcl file ${target}")
       }
       default: {
         fail_plan('Unsupported device type entered', 'Wrong Type', { 'result' => 'Unsupported device type entered.  Retry with supported device type of ios or nxos.'})

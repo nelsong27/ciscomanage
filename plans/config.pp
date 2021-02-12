@@ -31,10 +31,10 @@ Enum['ios', 'nxos'] $type
         run_command("scp -i ~/.ssh/id_rsa /etc/puppetlabs/code/environments/production/modules/ciscomanage/files/${tclfile} ${devuser}@${target}:bootflash:${tclfile}", $peserver, 'Uploading script to device')
         ctrl::sleep(5)
         # run command on the target to run the script that was uploaded
-        run_command("tclsh bootflash:${tclfile}", $target, "Configure the ${target}")
+        run_command("tclsh bootflash:${tclfile}", $target, "Configure device ${target}")
         ctrl::sleep(5)
         # ensure that the file that was uploaded is deleted
-        run_command("delete bootflash:${tclfile}", $target, "Delete the tcl file ${target}")
+        run_command("delete bootflash:${tclfile}", $target, "Delete the tcl file on ${target}")
       }
       default: {
         fail_plan('Unsupported device type entered', 'Wrong Type', { 'result' => 'Unsupported device type entered.  Retry with supported device type of ios or nxos.'})

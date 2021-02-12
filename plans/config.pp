@@ -14,7 +14,7 @@ Enum['ios', 'nxos'] $type
   # NOT USED upload_file('/Users/jerrymozes/code/cisco/ios/Boltdir/site-modules/nineks/files/commands.tcl', 'flash0://commands.tcl', $targets, 'Uploading to Cisco Device')
 
 # Get targets and depending on the target type run the appropriate run_commands
-  $target = get_targets($targets) {
+  get_targets($targets).each | $target |  {
     case $type {
       'ios': {
         # copy up the tcl file using scp.   Uses sshkey

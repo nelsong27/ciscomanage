@@ -17,7 +17,7 @@ Enum['ios', 'nxos'] $type
     case $type {
       'ios': {
         # copy up the tcl file using scp.   Uses sshkey
-        upload_file("/etc/puppetlabs/code/environments/production/modules/ciscomanage/${tclfile}", "bootflash:${tclfile}", $target)
+        upload_file("/etc/puppetlabs/code/environments/production/modules/ciscomanage/files/${tclfile}", "bootflash:${tclfile}", $target)
         # run_command("scp /etc/puppetlabs/code/environments/production/modules/ciscomanage/files/${tclfile} ${devuser}@${target}:flash:${tclfile}", $peserver, "Uploading script to ${target}")
         ctrl::sleep(5)
         # run command on the target to run the script that was uploaded
@@ -28,7 +28,7 @@ Enum['ios', 'nxos'] $type
       }
       'nxos': {
         # copy up the tcl file using scp.   Uses sshkey
-        upload_file("/etc/puppetlabs/code/environments/production/modules/ciscomanage/${tclfile}", "bootflash:${tclfile}", $target)
+        upload_file("/etc/puppetlabs/code/environments/production/modules/ciscomanage/files/${tclfile}", "bootflash:${tclfile}", $target)
         ctrl::sleep(5)
         # run command on the target to run the script that was uploaded
         run_command("tclsh bootflash:${tclfile}", $target, "Configure device ${target}")

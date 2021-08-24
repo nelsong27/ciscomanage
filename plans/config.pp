@@ -2,7 +2,6 @@
 # @param tclfile The name of the file that contains the script to run at the device.
 # @param devuser The user on the device to use to authenticate with.
 # @param type The type of device that is being connect to.  Either ios or nxos are acceptable.
-# @param peserver The Puppet Server to run the plan with.
 plan ciscomanage::config (
 Targetspec $targets,
 #vTargetspec $peserver,

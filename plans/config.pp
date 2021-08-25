@@ -28,7 +28,7 @@ Enum['ios', 'nxos'] $type
       }
       'nxos': {
         # copy up the tcl file using scp.   Uses sshkey
-        run_command("scp -i /home/jerry/.ssh/is_rsa /etc/puppetlabs/code/environments/production/modules/ciscomanage/files/${tclfile} ${devuser}@${target}:bootflash:${tclfile}", $peserver, "Uploading script to ${target}")
+        run_command("scp -i /home/jerry/.ssh/id_rsa /etc/puppetlabs/code/environments/production/modules/ciscomanage/files/${tclfile} ${devuser}@${target}:bootflash:${tclfile}", $peserver, "Uploading script to ${target}")
         ctrl::sleep(5)
         # run command on the target to run the script that was uploaded
         run_command("tclsh bootflash:${tclfile}", $target, "Configure device ${target}")

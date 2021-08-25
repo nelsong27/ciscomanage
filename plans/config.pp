@@ -5,7 +5,7 @@
 # @param peserver The Puppet Server to run the plan with.
 plan ciscomanage::config (
 Targetspec $targets,
-Optional[Targetspec] $peserver = 'pserver.puppet.demo',
+Optional[Targetspec] $peserver = 'pmaster.homelab.local',
 String $tclfile,
 String $devuser,
 Enum['ios', 'nxos'] $type

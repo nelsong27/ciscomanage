@@ -6,8 +6,8 @@
 plan ciscomanage::config (
 Targetspec $targets,
 Optional[Targetspec] $peserver = 'taskrun01.puppet.demo',
-String $tclfile,
-String $devuser,
+Enum['nxosportcfg.tcl', 'reset_nxosportcfg.tcl'] $tclfile,
+Optional[String] $devuser = 'admin',
 Enum['ios', 'nxos'] $type
 ){
 

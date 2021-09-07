@@ -7,7 +7,7 @@ plan ciscomanage::config (
 Targetspec $targets,
 Optional[Targetspec] $peserver = 'ip-172-31-52-187.ec2.internal',
 Enum['nxosportcfg.tcl', 'reset_nxosportcfg.tcl', 'iosbase.tcl', 'reset_iosbase.tcl'] $tclfile,
-Optional[String] $devuser = 'admin',
+Optional[String] $devuser = 'cisco',
 Enum['ios', 'nxos'] $type
 ){
 
@@ -18,7 +18,7 @@ Enum['ios', 'nxos'] $type
     case $type {
       'ios': {
         # copy up the tcl file using scp.   Uses sshkey
-        run_command("scp -i ~/.ssh/AWSnelsongomez.pem /files/${tclfile} ${devuser}@${target}:flash:${tclfile}", $peserver, "Uploading script to ${target}")
+        run_command("scp -i /root/.ssh/AWSnelsongomez.pem /files/${tclfile} ${devuser}@${target}:flash:${tclfile}", $peserver, "Uploading script to ${target}")
         ctrl::sleep(5)
         # run command on the target to run the script that was uploaded
         run_command("tclsh ${tclfile}", $target, "Configure the ${target}")
@@ -28,7 +28,7 @@ Enum['ios', 'nxos'] $type
       }
       'nxos': {
         # copy up the tcl file using scp.   Uses sshkey
-        run_command("scp -i ~/.ssh/AWSnelsongomez.pem /files/${tclfile} ${devuser}@${target}:bootflash:${tclfile}", $peserver, "Uploading script to ${target}")
+        run_command("scp -i /root/.ssh/AWSnelsongomez.pem /files/${tclfile} ${devuser}@${target}:bootflash:${tclfile}", $peserver, "Uploading script to ${target}")
         ctrl::sleep(5)
         # run command on the target to run the script that was uploaded
         run_command("tclsh bootflash:${tclfile}", $target, "Configure device ${target}")

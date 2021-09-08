@@ -5,7 +5,7 @@
 # @param peserver The Puppet Server to run the plan with.
 plan ciscomanage::config (
 Targetspec $targets,
-Optional[Targetspec] $peserver = 'ip-172-31-52-187.ec2.internal',
+Optional[Targetspec] $peserver = 'centos3.ec2.internal',
 Enum['nxosportcfg.tcl', 'reset_nxosportcfg.tcl', 'iosbase.tcl', 'reset_iosbase.tcl'] $tclfile,
 Optional[String] $devuser = 'ec2-user',
 Enum['ios', 'nxos'] $type

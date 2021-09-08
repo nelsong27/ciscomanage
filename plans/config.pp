@@ -7,7 +7,7 @@ plan ciscomanage::config (
 Targetspec $targets,
 Optional[Targetspec] $peserver = 'ip-172-31-52-187.ec2.internal',
 Enum['nxosportcfg.tcl', 'reset_nxosportcfg.tcl', 'iosbase.tcl', 'reset_iosbase.tcl'] $tclfile,
-Optional[String] $devuser = 'cisco',
+Optional[String] $devuser = 'ec2-user',
 Enum['ios', 'nxos'] $type
 ){
 

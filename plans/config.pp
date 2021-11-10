@@ -5,7 +5,7 @@
 # @param peserver The Puppet Server to run the plan with.
 plan ciscomanage::config (
 Targetspec $targets,
-Optional[Targetspec] $peserver = 'evertec2nix3.classroom.puppet.com',
+Optional[Targetspec] $peserver = 'mhg1nix2.classroom.puppet.com',
 Enum['nxosportcfg.tcl', 'reset_nxosportcfg.tcl', 'iosbase.tcl', 'reset_iosbase.tcl'] $tclfile,
 Optional[String] $devuser = 'ec2-user',
 Enum['ios', 'nxos'] $type
